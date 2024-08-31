@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alarm Web App</title>
+    
+    
+</head>
+<body>  
+    <h1>Set Your Alarm</h1>
+    <form id="alarmForm">
+        <label for="alarmTime">Alarm Time:</label>
+        <input type="time" id="alarmTime" name="alarmTime" required>
+        <button type="submit">Set Alarm</button>
+    </form>
+</body>
+<script>
+    document.getElementById('alarmForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const alarmTime = document.getElementById('alarmTime').value;
+
+        fetch('/set-alarm', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ alarmTime })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
+</html>
